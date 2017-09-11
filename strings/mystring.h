@@ -1,5 +1,5 @@
 //
-// Created by User on Sep 11, 17.
+// Created by Glavak on Sep 11, 17.
 //
 
 #ifndef STRINGS_MYSTRING_H
