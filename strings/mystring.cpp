@@ -30,6 +30,9 @@ mystring::mystring(mystring const & other)
     delete[] data;
     data = new char[other.datasize];
     memcpy(data, other.data, other.datasize);
+
+    this->datalen = other.datalen;
+    this->datasize = other.datasize;
 }
 
 // Деструктор
