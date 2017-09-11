@@ -85,3 +85,15 @@ mystring operator+(const mystring & a, const mystring & b)
     return str;
 }
 
+char mystring::operator[](const std::size_t index) const
+{
+    std::cout << std::endl << "const char []" << std::endl;
+    return data[index];
+}
+
+char & mystring::operator[](const std::size_t index)
+{
+    std::cout << std::endl << "char & []" << std::endl;
+    return data[index];
+}
+
