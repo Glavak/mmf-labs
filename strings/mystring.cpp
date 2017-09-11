@@ -76,10 +76,13 @@ mystring & mystring::operator+=(const mystring & other)
     return *this;
 }
 
+// NOTE: этот оператор - НЕ является членом класса. По сути это просто функция (не метод), которая принимает
+//       два объекта mystring и возвращает один
 mystring operator+(const mystring & a, const mystring & b)
 {
     mystring str(a);
 
+    // NOTE: используем предыдущий оператор, чтобы не переписывать код
     str += b;
 
     return str;

@@ -11,9 +11,11 @@ int main()
         mystring str2;
         std::cout << "Expected empty string: " << (char *) str2 << std::endl;
 
+        // NOTE: тут будет вызван конструктор копирования
         mystring str3 = str;
         std::cout << "Expected 'Test!': " << (char *) str3 << std::endl;
 
+        // NOTE: а тут оператор присваивания
         str3 = str2;
         std::cout << "Expected empty string: " << (char *) str3 << std::endl;
     }
@@ -32,10 +34,12 @@ int main()
 
     // На пятёрку:
     {
+        // NOTE: будет использоваться неконстантный оператор, так как объект first не объявлен как const
         mystring first("Cat!");
         first[2] = 'r';
         std::cout << "Expected 'Car!': " << (char *) first << std::endl;
 
+        // NOTE: будет использоваться константный оператор, так как объект second объявлен как const
         const mystring second("Aaargh!");
         char symbol = second[4];
         std::cout << "Expected 'g': " << symbol << std::endl;
