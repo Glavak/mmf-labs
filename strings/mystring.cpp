@@ -57,3 +57,31 @@ mystring::operator char *() const
     return data;
 }
 
+mystring & mystring::operator+=(const mystring & other)
+{
+    if (datalen + other.datalen + 1 > datasize)
+    {
+        char * oldData = data;
+        datasize = datalen + other.datalen + 1;
+        data = new char[datasize];
+
+        memcpy(data, oldData, datalen);
+
+        delete[] oldData;
+    }
+
+    memcpy(data + datalen, other.data, other.datalen + 1);
+
+    this->datalen += other.datalen;
+    return *this;
+}
+
+mystring operator+(const mystring & a, const mystring & b)
+{
+    mystring str(a);
+
+    str += b;
+
+    return str;
+}
+

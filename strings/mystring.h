@@ -22,6 +22,10 @@ public:
 
     operator char *() const;
 
+    mystring & operator+=(const mystring & other);
+
+    friend mystring operator+(const mystring& a, const mystring& b);
+
 private:
     char * data;
     unsigned int datasize, datalen;
