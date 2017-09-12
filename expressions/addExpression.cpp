@@ -16,9 +16,11 @@ expression * addExpression::diff()
 
 void addExpression::print()
 {
+    std::cout << "(";
     rhs->print();
     std::cout << " + ";
     lhs->print();
+    std::cout << ")";
 }
 
 addExpression::~addExpression()

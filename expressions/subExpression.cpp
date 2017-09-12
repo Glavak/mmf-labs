@@ -16,9 +16,11 @@ expression * subExpression::diff()
 
 void subExpression::print()
 {
+    std::cout << "(";
     rhs->print();
     std::cout << " - ";
     lhs->print();
+    std::cout << ")";
 }
 
 subExpression::~subExpression()

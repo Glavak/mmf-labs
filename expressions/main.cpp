@@ -16,10 +16,11 @@ int main()
     expression * totalSum = new subExpression(sum, c100);
 
     expression * diff = totalSum->diff();
-    std::cout << "Derivative of '42 + x - 100' is ";
+    std::cout << "Derivative of ((42 + x) - 100) is ";
     diff->print();
     std::cout << std::endl;
 
+    // NOTE: нам нужно освободить только корневые элементы, они рекурсивно удалят все остальные, через деструкторы
     delete sum;
     delete diff;
 
