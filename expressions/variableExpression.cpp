@@ -15,6 +15,11 @@ expression * variableExpression::diff()
     return new numberExpression(1);
 }
 
+expression * variableExpression::copy()
+{
+    return new variableExpression(name);
+}
+
 void variableExpression::print()
 {
     std::cout << name;

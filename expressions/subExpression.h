@@ -10,18 +10,20 @@
 class subExpression : public expression
 {
 public:
-    subExpression(expression * rhs, expression * lhs);
+    subExpression(expression * lhs, expression * rhs);
 
     expression * diff() override;
+
+    expression * copy() override;
 
     void print() override;
 
     ~subExpression() override;
 
 private:
-    expression * rhs;
-
     expression * lhs;
+
+    expression * rhs;
 };
 
 #endif //EXPRESSIONS_SUBEXPRESSION_H

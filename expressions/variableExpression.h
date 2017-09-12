@@ -14,6 +14,8 @@ public:
 
     expression * diff() override;
 
+    expression * copy() override;
+
     void print() override;
 
 private:

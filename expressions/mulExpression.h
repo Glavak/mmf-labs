@@ -2,15 +2,15 @@
 // Created by Glavak on Sep 12, 17.
 //
 
-#ifndef EXPRESSIONS_ADDEXPRESSION_H
-#define EXPRESSIONS_ADDEXPRESSION_H
+#ifndef EXPRESSIONS_MULEXPRESSION_H
+#define EXPRESSIONS_MULEXPRESSION_H
 
 #include "expression.h"
 
-class addExpression : public expression
+class mulExpression: public expression
 {
 public:
-    addExpression(expression * lhs, expression * rhs);
+    mulExpression(expression * lhs, expression * rhs);
 
     expression * diff() override;
 
@@ -18,7 +18,7 @@ public:
 
     void print() override;
 
-    ~addExpression() override;
+    ~mulExpression() override;
 
 private:
     expression * lhs;
@@ -26,4 +26,4 @@ private:
     expression * rhs;
 };
 
-#endif //EXPRESSIONS_ADDEXPRESSION_H
+#endif //EXPRESSIONS_MULEXPRESSION_H

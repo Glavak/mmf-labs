@@ -5,26 +5,31 @@
 #include <iostream>
 #include "subExpression.h"
 
-subExpression::subExpression(expression * rhs, expression * lhs) : rhs(rhs), lhs(lhs)
+subExpression::subExpression(expression * lhs, expression * rhs) : lhs(lhs), rhs(rhs)
 {}
 
 expression * subExpression::diff()
 {
     // Производная разности равна разности производных
-    return new subExpression(rhs->diff(), lhs->diff());
+    return new subExpression(lhs->diff(), rhs->diff());
+}
+
+expression * subExpression::copy()
+{
+    return new subExpression(lhs->copy(), rhs->copy());
 }
 
 void subExpression::print()
 {
     std::cout << "(";
-    rhs->print();
-    std::cout << " - ";
     lhs->print();
+    std::cout << " - ";
+    rhs->print();
     std::cout << ")";
 }
 
 subExpression::~subExpression()
 {
-    delete rhs;
     delete lhs;
+    delete rhs;
 }
