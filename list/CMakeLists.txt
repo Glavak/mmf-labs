@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_CXX_FLAGS "-Wall -Werror")
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp mylist.h)
 add_executable(list ${SOURCE_FILES})
