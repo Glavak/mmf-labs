@@ -5,8 +5,6 @@
 #ifndef LIST_MYLIST_H
 #define LIST_MYLIST_H
 
-#include <usp10.h>
-
 template<class TElement>
 class mylist
 {
@@ -29,16 +27,45 @@ public:
 
     TElement pop_back();
 
-private:
     // Нам понадобится ещё одна структура/класс, чтобы хранить цепочку элементов списка
-    template<class TValue>
     struct listItem
     {
-        TValue value;
+        TElement value;
         listItem * next;
     };
 
-    listItem<TElement> * head;
+    class iterator
+    {
+    public:
+        typedef std::forward_iterator_tag iterator_category; // не обязательно, но показывает что может наш итератор
+
+        iterator(listItem * item);
+
+        iterator(const iterator & other);
+
+        iterator & operator=(const iterator & other) = delete;
+
+        bool operator==(const iterator & other) const;
+
+        bool operator!=(const iterator & other) const;
+
+        iterator & operator++();
+
+        TElement & operator*() const;
+
+        TElement & operator->() const;
+
+    private:
+
+        listItem * current;
+    };
+
+    iterator begin();
+
+    iterator end();
+
+private:
+    mylist<TElement>::listItem * head;
 };
 
 // NOTE: так уж вышло, что если класс - шаблонный, то все его потроха должны находиться в .h файле, и никак иначе. На
@@ -66,7 +93,7 @@ mylist<TElement>::~mylist()
 template<class TElement>
 void mylist<TElement>::push(const TElement & value)
 {
-    listItem<TElement> * item = new listItem<TElement>();
+    listItem * item = new listItem();
     item->value = value;
     item->next = head;
     head = item;
@@ -84,7 +111,7 @@ TElement mylist<TElement>::pop()
 
     TElement value = head->value;
 
-    listItem<TElement> * newHead = head->next;
+    listItem * newHead = head->next;
     delete head;
     head = newHead;
 
@@ -95,7 +122,7 @@ TElement mylist<TElement>::pop()
 template<class TElement>
 void mylist<TElement>::push_back(const TElement & value)
 {
-    listItem<TElement> * newItem = new listItem<TElement>();
+    listItem * newItem = new listItem();
     newItem->value = value;
     newItem->next = nullptr;
 
@@ -105,7 +132,7 @@ void mylist<TElement>::push_back(const TElement & value)
     }
     else
     {
-        listItem<TElement> * current = head;
+        listItem * current = head;
         while (current->next != nullptr)
         {
             current = current->next;
@@ -130,7 +157,7 @@ TElement mylist<TElement>::pop_back()
         return pop();
     }
 
-    listItem<TElement> * current = head;
+    listItem * current = head;
     while (current->next->next != nullptr)
     {
         current = current->next;
@@ -141,6 +168,67 @@ TElement mylist<TElement>::pop_back()
     current->next = nullptr;
 
     return value;
+}
+
+// NOTE: ключевое слово typename здесь для того, чтобы показать компилятору, что mylist<TElement>::iterator это именно
+//       вложенный класс, а не член/поле класса
+template<class TElement>
+typename mylist<TElement>::iterator mylist<TElement>::begin()
+{
+    // Вызываем конструктор mylist<TElement>::iterator(listItem<TElement> * item)
+    return mylist<TElement>::iterator(head);
+}
+
+template<class TElement>
+typename mylist<TElement>::iterator mylist<TElement>::end()
+{
+    return mylist<TElement>::iterator(nullptr);
+}
+
+template<class TElement>
+mylist<TElement>::iterator::iterator(listItem * item)
+{
+    current = item;
+}
+
+template<class TElement>
+mylist<TElement>::iterator::iterator(const mylist<TElement>::iterator & other)
+{
+    current = other.current;
+}
+
+template<class TElement>
+bool mylist<TElement>::iterator::operator==(const mylist<TElement>::iterator & other) const
+{
+    return current == other.current;
+}
+
+template<class TElement>
+bool mylist<TElement>::iterator::operator!=(const mylist<TElement>::iterator & other) const
+{
+    return current != other.current;
+}
+
+// Оператор перехода к следующему элементу списка
+template<class TElement>
+typename mylist<TElement>::iterator & mylist<TElement>::iterator::operator++()
+{
+    current = current->next;
+
+    return *this;
+}
+
+// Операторы получения элемента, на который сейчас указывает итератор
+template<class TElement>
+TElement & mylist<TElement>::iterator::operator*() const
+{
+    return current->value;
+}
+
+template<class TElement>
+TElement & mylist<TElement>::iterator::operator->() const
+{
+    return current->value;
 }
 
 #endif //LIST_MYLIST_H
